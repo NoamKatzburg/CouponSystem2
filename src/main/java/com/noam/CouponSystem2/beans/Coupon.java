@@ -20,7 +20,7 @@ public class Coupon {
 	@Id
 	@GeneratedValue
 	private int id;
-	private int companyID;
+	private int companyId;
 	@Enumerated
 	private Category category;
 	private String title;
