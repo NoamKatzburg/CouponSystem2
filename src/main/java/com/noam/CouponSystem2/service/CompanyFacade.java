@@ -1,5 +1,6 @@
 package com.noam.CouponSystem2.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,20 @@ import com.noam.CouponSystem2.repo.CompanyRepository;
 
 @Service // DBDAO
 //copy from facade
-public class CompanyService {
+public class CompanyFacade extends ClientFacade {
 
 	@Autowired
 	private CompanyRepository repo;
+	
+	public CompanyFacade() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public boolean login(String email, String password) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	public boolean isCompanyExist(String email, String password) {
 		boolean exist = repo.findByEmailAndPassword(email, password) == null ? false : true;
@@ -43,5 +54,7 @@ public class CompanyService {
 	public Company getOneCompany(int id) {
 		return repo.getOne(id);
 	}
+
+	
 
 }

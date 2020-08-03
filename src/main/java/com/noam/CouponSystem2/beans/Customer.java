@@ -19,13 +19,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Customer {
 	
-	@Id
-	@GeneratedValue
+	@Id @GeneratedValue
 	private int id;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
-	@OneToMany(cascade = CascadeType.REMOVE,  orphanRemoval = true, fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Coupon> coupons;
 }

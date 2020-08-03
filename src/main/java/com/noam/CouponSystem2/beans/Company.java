@@ -20,12 +20,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Company {
 
-	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
 	private String email;
 	private String password;
-	@OneToMany(cascade = CascadeType.REMOVE,  orphanRemoval = true, fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Coupon> coupons;
 }

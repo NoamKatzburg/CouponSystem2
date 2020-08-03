@@ -1,5 +1,6 @@
 package com.noam.CouponSystem2.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,15 @@ import com.noam.CouponSystem2.beans.Customer;
 import com.noam.CouponSystem2.repo.CustomerRepository;
 
 @Service
-public class CustomerService {
+public class CustomerFacade extends ClientFacade{
 
 	@Autowired
 	private CustomerRepository repo;
+	
+	public CustomerFacade() {
+		// TODO Auto-generated constructor stub
+	}
+
 	
 	public boolean isCustomerExist(String email, String password) {
 		boolean exist = repo.findByEmailAndPassword(email, password) == null ? false : true;
@@ -41,6 +47,13 @@ public class CustomerService {
 	
 	public Customer getOneCustomer(int id) {
 		return repo.getOne(id);
+	}
+
+
+	@Override
+	public boolean login(String email, String password) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

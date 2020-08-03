@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.noam.CouponSystem2.service.CompanyService;
+import com.noam.CouponSystem2.service.CompanyFacade;
 
 
 @RestController
@@ -13,6 +13,6 @@ import com.noam.CouponSystem2.service.CompanyService;
 public class CompanyController {
 
 	@Autowired
-	private CompanyService service;
+	private CompanyFacade service;
 	
 }

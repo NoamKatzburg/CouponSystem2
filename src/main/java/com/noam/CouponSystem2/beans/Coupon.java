@@ -3,6 +3,7 @@ package com.noam.CouponSystem2.beans;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,11 +18,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Coupon {
 
-	@Id
-	@GeneratedValue
+	@Id @GeneratedValue
 	private int id;
 	private int companyId;
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private Category category;
 	private String title;
 	private String description;
