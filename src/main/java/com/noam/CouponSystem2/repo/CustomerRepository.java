@@ -19,4 +19,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
 	@Query(value = "SELECT * FROM couponsys.customer_coupons WHERE customer_id = :customer_id", nativeQuery = true)
 	List<Coupon> findCouponsByCustomerId(@Param("customer_id") int customerId);
+
+
 }
