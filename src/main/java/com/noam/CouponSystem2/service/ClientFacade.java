@@ -2,23 +2,23 @@ package com.noam.CouponSystem2.service;
 
 import java.sql.SQLException;
 
-import com.noam.CouponSystem2.repo.CompanyRepository;
-import com.noam.CouponSystem2.repo.CouponRepository;
-import com.noam.CouponSystem2.repo.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import com.noam.CouponSystem2.dbdao.CompanyDBDAO;
+import com.noam.CouponSystem2.dbdao.CouponDBDAO;
+import com.noam.CouponSystem2.dbdao.CustomerDBDAO;
 
+@Component
 public abstract class ClientFacade {
 
-	protected CompanyRepository companiesDAO;
-	protected CustomerRepository customersDAO;
-	protected CouponRepository couponsDAO;
+	@Autowired
+	protected CompanyDBDAO companyDBDAO;
+	@Autowired
+	protected CustomerDBDAO customerDBDAO;
+	@Autowired
+	protected CouponDBDAO couponDBDAO;
 	
-	public ClientFacade() {
-//		companiesDAO = new com
-//		customersDAO = new CustomersDBDAO();
-//		couponsDAO = new CouponsDBDAO();
-	}
-
 
 	public abstract boolean login(String email, String password)  throws SQLException;
 	
