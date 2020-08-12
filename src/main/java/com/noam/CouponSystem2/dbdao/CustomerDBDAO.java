@@ -19,7 +19,7 @@ public class CustomerDBDAO {
 		return exist;
 	}
 
-	public Customer getCustomerIdByEmail(String email) {
+	public Customer getCustomerByEmail(String email) {
 		return repo.findByEmail(email);
 	}
 

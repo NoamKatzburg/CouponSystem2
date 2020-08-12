@@ -44,12 +44,14 @@ public class CouponDBDAO {
 		return exist;
 	}
 	
-	//TODO addCouponPurchase
-	//TODO doesCouponPurchaseExist
-	//TODO getCouponsByCustomerId
-	//TODO deleteCouponPurchase
-	//TODO deleteCouponPurchaseById
-	//TODO deleteAllCouponPurchasesByCustomerId
+	public void addCouponPurchase(int company_id, int coupons_id) {
+		repo.addCouponPurchase(company_id, coupons_id);
+	}
+	
+	public void deleteCouponPurchase(int company_id, int coupons_id) {
+		repo.deleteCouponPurchase(company_id, coupons_id);
+	}
+	
 	
 	
 	}
