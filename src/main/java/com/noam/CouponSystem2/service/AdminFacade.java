@@ -49,13 +49,17 @@ public class AdminFacade extends ClientFacade {
 	}
 
 	public List<Company> getAllCompanies() {
-		return companyDBDAO.getAllCompanies();
-		// TODO will the coupons be eagerly loaded?
+		List<Company> companies = companyDBDAO.getAllCompanies();
+		for (Company company : companies) {
+			company.setCoupons(couponDBDAO.getAllCouponsByCompanyId(company.getId()));
+		}
+		return companies;
 	}
 
 	public Company getOneCompany(int id) {
-		return companyDBDAO.getOneCompany(id);
-		// TODO will the coupons be eagerly loaded?
+		Company c1 = companyDBDAO.getOneCompany(id);
+		c1.setCoupons(getAllCouponsByCompanyId(id));
+		return c1;
 	}
 
 	public void addCustomer(Customer customer) {
@@ -87,7 +91,11 @@ public class AdminFacade extends ClientFacade {
 		return customerDBDAO.getOneCustomer(id);
 	}
 
-	public List<Coupon> getAllCoupons(){
+	public List<Coupon> getAllCoupons() {
 		return couponDBDAO.getAllCoupons();
-}
+	}
+
+	public List<Coupon> getAllCouponsByCompanyId(int id) {
+		return couponDBDAO.getAllCouponsByCompanyId(id);
+	}
 }
