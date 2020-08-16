@@ -1,3 +1,5 @@
+
+
 package com.noam.CouponSystem2.beans;
 
 import java.util.List;

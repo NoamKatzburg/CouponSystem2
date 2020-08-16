@@ -75,6 +75,10 @@ public class CustomerFacade extends ClientFacade {
 		}
 		return coupons;
 	}
+	
+	public List<Coupon> getAllCouponsByCompanyId(int id) {
+		return couponDBDAO.getAllCouponsByCompanyId(id);
+	}
 
 	public List<Coupon> getCustomerCouponsByPrice(double maxPrice) {
 		List<Coupon> coupons = getCustomerCoupons();

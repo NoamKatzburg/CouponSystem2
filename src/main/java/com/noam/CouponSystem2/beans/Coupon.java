@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Coupon {
 
-	@Id @GeneratedValue @Column(updatable = false)
+	@Id @GeneratedValue (strategy = GenerationType.IDENTITY) @Column(updatable = false)
 	private int id;
 	@Column(updatable = false)
 	private int companyId;
