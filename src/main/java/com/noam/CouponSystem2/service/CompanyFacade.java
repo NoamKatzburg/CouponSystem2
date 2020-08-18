@@ -91,7 +91,9 @@ public class CompanyFacade extends ClientFacade {
 	}
 	
 	public Company getCompanyDetails() {
-		return companyDBDAO.getOneCompany(companyId);
+		Company c1 = companyDBDAO.getOneCompany(companyId);
+		c1.setCoupons(couponDBDAO.getAllCouponsByCompanyId(companyId));
+		return c1;
 		//TODO will coupons be eagerly loaded?
 	}
 	
