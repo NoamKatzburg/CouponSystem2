@@ -68,7 +68,7 @@ public class DataInput implements CommandLineRunner {
 		Coupon coupon3 = new Coupon();
 		coupon3.setCompanyId(3);
 		coupon3.setCategory(Category.RESTAURANT);
-		coupon3.setTitle("come to us");
+		coupon3.setTitle("join us");
 		coupon3.setDescription("free meal");
 		coupon3.setStartDate(java.sql.Date.valueOf("2020-09-17"));
 		coupon3.setEndDate(java.sql.Date.valueOf("2020-09-17"));
@@ -114,15 +114,13 @@ public class DataInput implements CommandLineRunner {
 		cust4.setEmail("cust4@g.com");
 		cust4.setPassword("1234");
 		
-	
+		com1.setCoupons(Arrays.asList(coupon1,coupon4));
+		com2.setCoupons(Arrays.asList(coupon2));
+		com3.setCoupons(Arrays.asList(coupon3));
 
 		company.addCompany(com1);
 		company.addCompany(com2);
 		company.addCompany(com3);
-		coupon.addCoupon(coupon1);
-		coupon.addCoupon(coupon2);
-		coupon.addCoupon(coupon3);
-		coupon.addCoupon(coupon4);
 		customer.addCustomer(cust1);
 		customer.addCustomer(cust2);
 		customer.addCustomer(cust3);

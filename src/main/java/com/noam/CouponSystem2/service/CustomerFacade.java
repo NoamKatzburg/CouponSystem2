@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.noam.CouponSystem2.beans.Category;
@@ -23,6 +24,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
+@Scope("prototype")
 public class CustomerFacade extends ClientFacade {
 
 	private int customerId;

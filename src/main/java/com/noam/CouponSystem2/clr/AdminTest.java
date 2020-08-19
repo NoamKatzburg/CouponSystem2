@@ -1,5 +1,6 @@
 package com.noam.CouponSystem2.clr;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.noam.CouponSystem2.beans.Category;
 import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
@@ -33,12 +35,27 @@ public class AdminTest implements CommandLineRunner {
 		MyUtils.printTestLine("testing login");
 		System.out.println("Should return true if login works: " + facade.login("admin@admin.com", "admin"));
 		
+		
 		//OK
-		MyUtils.printTestLine("testing add company - company 5");
+		MyUtils.printTestLine("testing add company - company 4");
 		Company c4 = new Company();
-		c4.setName("company5");
-		c4.setEmail("com5@g.com");
-		c4.setPassword("com5");
+		c4.setName("company4");
+		c4.setEmail("com4@g.com");
+		c4.setPassword("com4");
+		
+		Coupon coupon1 = new Coupon();
+		coupon1.setCompanyId(4);
+		coupon1.setCategory(Category.ELECTRICITY);
+		coupon1.setTitle("test");
+		coupon1.setDescription("bka ba");
+		coupon1.setStartDate(java.sql.Date.valueOf("2021-09-03"));
+		coupon1.setEndDate(java.sql.Date.valueOf("2021-09-17"));
+		coupon1.setAmount(21);
+		coupon1.setPrice(22.2);
+		coupon1.setImage("img");
+		
+		
+		c4.setCoupons(Arrays.asList(coupon1));
 		facade.addCompany(c4);
 		companies = facade.getAllCompanies();
 		MyUtils.printCompaniesTable(companies);

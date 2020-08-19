@@ -20,7 +20,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Coupon {
 
-	@Id @GeneratedValue (strategy = GenerationType.IDENTITY) @Column(updatable = false)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(updatable = false)
 	private int id;
 	@Column(updatable = false)
 	private int companyId;
@@ -28,9 +30,14 @@ public class Coupon {
 	private Category category;
 	private String title;
 	private String description;
+	@Column(columnDefinition = "date")
 	private Date startDate;
+	@Column(columnDefinition = "date")
 	private Date endDate;
 	private int amount;
 	private double price;
 	private String image;
+	
+
+
 }

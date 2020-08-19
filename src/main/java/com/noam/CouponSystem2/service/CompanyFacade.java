@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.noam.CouponSystem2.beans.Category;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Service
 @Data
 @NoArgsConstructor
+@Scope("prototype")
 public class CompanyFacade extends ClientFacade {
 
 	private int companyId;
