@@ -12,9 +12,9 @@ import com.noam.CouponSystem2.dbdao.CouponDBDAO;
 
 import lombok.Data;
 
-@Data
+
 @Component
-public class CouponExpirationDailyJob extends Thread {
+public class CouponExpirationDailyJob {
 
 	@Autowired
 	private CouponDBDAO cDao;
@@ -35,6 +35,5 @@ public class CouponExpirationDailyJob extends Thread {
 
 		}
 	}
-
 
 }
