@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import com.noam.CouponSystem2.beans.Category;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
+import com.noam.CouponSystem2.beans.CustomerCoupons;
 import com.noam.CouponSystem2.dbdao.CustomerDBDAO;
+import com.noam.CouponSystem2.exception.CouponPurchaseException;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,24 +42,28 @@ public class CustomerFacade extends ClientFacade {
 		return false;
 	}
 
-	public void purchaseCoupon(Coupon coupon, int couponId) {
-		if (couponDBDAO.doesCouponPurchaseExist(customerId, couponId) != null) {
-			System.out.println("you have already purchased this coupon, coupon: " + couponDBDAO.getOneCoupon(couponId));
-			return;
-			// TODO exception
+	public void purchaseCoupon(Coupon coupon) throws CouponPurchaseException {
+
+		if (getCustomerCoupons().contains(coupon)) {
+			throw new CouponPurchaseException(
+					"you have already purchased this coupon, coupon: " + couponDBDAO.getOneCoupon(coupon.getId()));
 		}
+
 		if (coupon.getAmount() < 1) {
-			System.out.println("This coupon is out of stock");
-			return;
-			// TODO exception
+			throw new CouponPurchaseException("This coupon is out of stock");
 		}
 		if (coupon.getEndDate().before(new Date())) {
-			System.out.println("this coupon has expired, Coupon: " + couponDBDAO.getOneCoupon(couponId));
-			return;
-			// TODO exception
+			throw new CouponPurchaseException(
+					"this coupon has expired, Coupon: " + couponDBDAO.getOneCoupon(coupon.getId()));
 		}
-		couponDBDAO.addCouponPurchase(customerId, couponId);
+		couponDBDAO.addCouponPurchase(customerId, coupon.getId());
+		coupon.setAmount(coupon.getAmount() - 1);
+		couponDBDAO.updateCoupon(coupon);
 
+	}
+
+	public void deleteCouponPurchase(int customer_id, int coupons_id) {
+		couponDBDAO.deleteCouponPurchase(customer_id, coupons_id);
 	}
 
 	public List<Coupon> getCustomerCoupons() {
@@ -77,10 +83,6 @@ public class CustomerFacade extends ClientFacade {
 		}
 		return coupons;
 	}
-	
-	public List<Coupon> getAllCouponsByCompanyId(int id) {
-		return couponDBDAO.getAllCouponsByCompanyId(id);
-	}
 
 	public List<Coupon> getCustomerCouponsByPrice(double maxPrice) {
 		List<Coupon> coupons = getCustomerCoupons();
@@ -99,6 +101,6 @@ public class CustomerFacade extends ClientFacade {
 
 	public Customer getCustomerDetails() {
 		return customerDBDAO.getOneCustomer(customerId);
-		//TODO do coupon eagerly load?
+		// TODO do coupon eagerly load?
 	}
 }

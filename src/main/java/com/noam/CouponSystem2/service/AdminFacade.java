@@ -8,39 +8,40 @@ import org.springframework.stereotype.Service;
 import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
+import com.noam.CouponSystem2.exception.InvalidInputException;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Service
-@Data
-@NoArgsConstructor
+
 public class AdminFacade extends ClientFacade {
+
+	public AdminFacade() {
+		super();
+	}
 
 	@Override
 	public boolean login(String email, String password) throws SQLException {
-		return email == "admin@admin.com" && password == "admin";
+		return email.equals("admin@admin.com") && password.equals("admin");
 	}
 
-	public void addCompany(Company company) {
+	public void addCompany(Company company) throws InvalidInputException {
 		List<Company> companies = getAllCompanies();
 		for (Company company2 : companies) {
 			if (company.getName().equalsIgnoreCase(company2.getName())) {
-				System.out.println("Name is already registered, company not added");
-				return;
-				// TODO exception
+				throw new InvalidInputException("Name is already registered, company not added");
+
 			}
 
 			if (company.getEmail().equalsIgnoreCase(company2.getEmail())) {
-				System.out.println("Email is already registered, company not added");
-				return;
-				// TODO exception
+				throw new InvalidInputException("Email is already registered, company not added");
 			}
 		}
 		companyDBDAO.addCompany(company);
 	}
 
-	public void updateCompany(Company company) { // will this need the company id?
+	public void updateCompany(Company company) {
 		companyDBDAO.updateCompany(company);
 	}
 
@@ -62,20 +63,19 @@ public class AdminFacade extends ClientFacade {
 		return c1;
 	}
 
-	public void addCustomer(Customer customer) {
+	public void addCustomer(Customer customer) throws InvalidInputException {
 		List<Customer> customers = customerDBDAO.getAllCustomers();
 		for (Customer cust : customers) {
 			if (customer.getEmail().equalsIgnoreCase(cust.getEmail())) {
-				System.out.println("Email is already registered");
-				return;
-				// TODO exception
+				throw new InvalidInputException("Email is already registered, please try again");
+
 			}
 		}
 
 		customerDBDAO.addCustomer(customer);
 	}
 
-	public void updateCustomer(Customer customer) { // will this need the company id?
+	public void updateCustomer(Customer customer) {
 		customerDBDAO.updateCustomer(customer);
 	}
 

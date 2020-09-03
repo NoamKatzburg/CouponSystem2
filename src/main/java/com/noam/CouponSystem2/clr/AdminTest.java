@@ -12,17 +12,20 @@ import com.noam.CouponSystem2.beans.Category;
 import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
+import com.noam.CouponSystem2.login.ClientType;
+import com.noam.CouponSystem2.login.LoginManager;
 import com.noam.CouponSystem2.service.AdminFacade;
+import com.noam.CouponSystem2.service.ClientFacade;
 import com.noam.CouponSystem2.utils.MyUtils;
 
 @Component
 @Order(2)
 public class AdminTest implements CommandLineRunner {
 
-	//Finished Checking
-	
+	// TODO Finished Checking
+
 	@Autowired
-	private AdminFacade facade;
+	private ClientFacade adminFacade;
 	private List<Company> companies;
 	private List<Customer> customers;
 	private List<Coupon> coupons;
@@ -31,18 +34,17 @@ public class AdminTest implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		MyUtils.classSeparator("Admin");
 
-		//OK
+		// OK
 		MyUtils.printTestLine("testing login");
-		System.out.println("Should return true if login works: " + facade.login("admin@admin.com", "admin"));
+		adminFacade = LoginManager.login("admin@admin.com", "admin", ClientType.ADMINISTRATOR);
 		
-		
-		//OK
+		// OK
 		MyUtils.printTestLine("testing add company - company 4");
 		Company c4 = new Company();
 		c4.setName("company4");
 		c4.setEmail("com4@g.com");
 		c4.setPassword("com4");
-		
+
 		Coupon coupon1 = new Coupon();
 		coupon1.setCompanyId(4);
 		coupon1.setCategory(Category.ELECTRICITY);
@@ -53,70 +55,61 @@ public class AdminTest implements CommandLineRunner {
 		coupon1.setAmount(21);
 		coupon1.setPrice(22.2);
 		coupon1.setImage("img");
-		
-		
+
 		c4.setCoupons(Arrays.asList(coupon1));
-		facade.addCompany(c4);
-		companies = facade.getAllCompanies();
+		((AdminFacade) adminFacade).addCompany(c4);
+		companies = ((AdminFacade) adminFacade).getAllCompanies();
 		MyUtils.printCompaniesTable(companies);
-	
-		//OK
+
+		// OK
 		MyUtils.printTestLine("testing update company - company 2 password and chacking get one company (2)");
-		Company c2 = facade.getOneCompany(2);
+		Company c2 = ((AdminFacade) adminFacade).getOneCompany(2);
 		c2.setPassword("com2345");
-		facade.updateCompany(c2);
-		companies = facade.getAllCompanies();
+		((AdminFacade) adminFacade).updateCompany(c2);
+		companies = ((AdminFacade) adminFacade).getAllCompanies();
 		MyUtils.printCompaniesTable(companies);
-	
-		//OK
+
+		// OK
 		MyUtils.printTestLine("testing delete company - company 4");
-		facade.deleteCompany(4);
-		companies = facade.getAllCompanies();
+		((AdminFacade) adminFacade).deleteCompany(4);
+		companies = ((AdminFacade) adminFacade).getAllCompanies();
 		MyUtils.printCompaniesTable(companies);
-		
-		//OK
+
+		// OK
 		MyUtils.printTestLine("testing add one customer (5)");
 		Customer cust5 = new Customer();
 		cust5.setFirstName("customer5");
 		cust5.setLastName("customer");
 		cust5.setEmail("cust5@g.com");
 		cust5.setPassword("1234");
-		facade.addCustomer(cust5);
-		customers = facade.getAllCustomers();
+		((AdminFacade) adminFacade).addCustomer(cust5);
+		customers = ((AdminFacade) adminFacade).getAllCustomers();
 		MyUtils.printCustomersTable(customers);
-		
-		//OK
+
+		// OK
 		MyUtils.printTestLine("testing update one customer (5)");
 		cust5.setEmail("customer5email");
-		facade.updateCustomer(cust5);
-		customers = facade.getAllCustomers();
+		((AdminFacade) adminFacade).updateCustomer(cust5);
+		customers = ((AdminFacade) adminFacade).getAllCustomers();
 		MyUtils.printCustomersTable(customers);
-		
-		//OK
+
+		// OK
 		MyUtils.printTestLine("testing get one and delete one customer (5)");
-		System.out.println(facade.getOneCustomer(5));
-		facade.deleteCustomer(5);
-		customers = facade.getAllCustomers();
+		System.out.println(((AdminFacade) adminFacade).getOneCustomer(5));
+		((AdminFacade) adminFacade).deleteCustomer(5);
+		customers = ((AdminFacade) adminFacade).getAllCustomers();
 		MyUtils.printCustomersTable(customers);
-		
-		//OK
+
+		// OK
 		MyUtils.printTestLine("testing get all coupons");
-		coupons = facade.getAllCoupons();
+		coupons = ((AdminFacade) adminFacade).getAllCoupons();
 		MyUtils.printCouponsTable(coupons);
-		
-		//OK
+
+		// OK
 		MyUtils.printTestLine("testing get all coupons by company id (1)");
-		coupons = facade.getAllCouponsByCompanyId(1);
+		coupons = ((AdminFacade) adminFacade).getAllCouponsByCompanyId(1);
 		MyUtils.printCouponsTable(coupons);
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 	}
 
 }

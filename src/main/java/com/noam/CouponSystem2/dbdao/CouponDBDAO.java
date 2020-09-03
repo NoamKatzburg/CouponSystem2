@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.noam.CouponSystem2.beans.Coupon;
+import com.noam.CouponSystem2.beans.Customer;
+import com.noam.CouponSystem2.beans.CustomerCoupons;
 import com.noam.CouponSystem2.repo.CouponRepository;
+import com.noam.CouponSystem2.repo.CustomerRepository;
 
 @Component
 public class CouponDBDAO {
 
 	@Autowired
 	private CouponRepository repo;
+	@Autowired
+	private CustomerRepository customerRepo;
 
 	public void addCoupon(Coupon coupon) {
 		repo.save(coupon);
@@ -45,16 +50,24 @@ public class CouponDBDAO {
 		return exist;
 	}
 
-	public void addCouponPurchase(int company_id, int coupons_id) {
-		repo.addCouponPurchase(company_id, coupons_id);
+	public void addCouponPurchase(int customer_id, int coupons_id) {
+		Customer  c1 = customerRepo.getOne(customer_id);
+		Coupon cu1 = repo.getOne(coupons_id);
+		c1.purchaseCoupon(cu1);
+		customerRepo.saveAndFlush(c1);
 	}
 
-	public void deleteCouponPurchase(int company_id, int coupons_id) {
-		repo.deleteCouponPurchase(company_id, coupons_id);
+	public void deleteCouponPurchase(int customer_id, int coupons_id) {
+		Customer  c1 = customerRepo.getOne(customer_id);
+		c1.deleteCouponPurchase(coupons_id);
+		customerRepo.saveAndFlush(c1);
+		
 	}
+//
+//	public Coupon doesCouponPurchaseExist(int customer_id, int coupon_id) {
+//		return repo.doesCouponPurchaseExist(customer_id, coupon_id);
+//	}
+	
 
-	public Coupon doesCouponPurchaseExist(int customer_id, int coupon_id) {
-		return repo.doesCouponPurchaseExist(customer_id, coupon_id);
-	}
 
 }

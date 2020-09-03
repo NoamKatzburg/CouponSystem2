@@ -9,7 +9,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.ForeignKey;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +32,14 @@ public class Customer {
 	private String lastName;
 	private String email;
 	private String password;
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Coupon> coupons;
+	
+	public void purchaseCoupon(Coupon coupon) {
+		coupons.add(coupon);
+	}
+	
+	public void deleteCouponPurchase(int coupons_id) {
+		coupons.remove(coupons_id);
+	}
 }

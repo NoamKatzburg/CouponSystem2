@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.noam.CouponSystem2.beans.Category;
 import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
+import com.noam.CouponSystem2.exception.InvalidInputException;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,13 +33,11 @@ public class CompanyFacade extends ClientFacade {
 		return false;
 	}
 	
-	public void addCoupon(Coupon coupon) {
+	public void addCoupon(Coupon coupon) throws InvalidInputException {
 		List<Coupon> coupons = couponDBDAO.getAllCoupons();
 		for (Coupon coup : coupons) {
 			if (coup.getCompanyId()==coupon.getCompanyId() && coup.getTitle() == coupon.getTitle()) {
-				System.out.println("This company already has a coupon by this title. please rename");
-				//TODO exception
-				return;
+				throw new InvalidInputException("This company already has a coupon by this title. please rename");
 			}
 		}
 		couponDBDAO.addCoupon(coupon);
@@ -96,7 +95,6 @@ public class CompanyFacade extends ClientFacade {
 		Company c1 = companyDBDAO.getOneCompany(companyId);
 		c1.setCoupons(couponDBDAO.getAllCouponsByCompanyId(companyId));
 		return c1;
-		//TODO will coupons be eagerly loaded?
 	}
 	
 }

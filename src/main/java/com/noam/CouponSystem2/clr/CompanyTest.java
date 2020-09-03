@@ -11,7 +11,10 @@ import com.noam.CouponSystem2.beans.Category;
 import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
+import com.noam.CouponSystem2.login.ClientType;
+import com.noam.CouponSystem2.login.LoginManager;
 import com.noam.CouponSystem2.service.AdminFacade;
+import com.noam.CouponSystem2.service.ClientFacade;
 import com.noam.CouponSystem2.service.CompanyFacade;
 import com.noam.CouponSystem2.utils.MyUtils;
 
@@ -19,10 +22,11 @@ import com.noam.CouponSystem2.utils.MyUtils;
 @Order(3)
 public class CompanyTest implements CommandLineRunner {
 
-	@Autowired
-	private CompanyFacade facade;
+	//TODO finish checking
 	@Autowired
 	private AdminFacade admin;
+	@Autowired
+	private ClientFacade companyFacade;
 //	private List<Company> companies;
 //	private List<Customer> customers;
 	private List<Coupon> coupons;
@@ -30,10 +34,10 @@ public class CompanyTest implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		MyUtils.classSeparator("Company");
-		
+
 		MyUtils.printTestLine("Checking login");
-		System.out.println("Should return true: "+ facade.login("com1@g.com", "com1"));
-		
+		companyFacade = LoginManager.login("com1@g.com", "com1", ClientType.COMPANY);
+
 		MyUtils.printTestLine("Testing add coupon - 5");
 		Coupon coupon5 = new Coupon();
 		coupon5.setCompanyId(2);
@@ -45,42 +49,36 @@ public class CompanyTest implements CommandLineRunner {
 		coupon5.setAmount(300);
 		coupon5.setPrice(10_000);
 		coupon5.setImage("img");
-		facade.addCoupon(coupon5);
+		((CompanyFacade) companyFacade).addCoupon(coupon5);
 		coupons = admin.getAllCoupons();
 		MyUtils.printCouponsTable(coupons);
-		
-		
+
 		MyUtils.printTestLine("Testing update coupon - 5 set to FOOD");
 		coupon5.setCategory(Category.FOOD);
-		facade.updateCoupon(coupon5);
+		((CompanyFacade) companyFacade).updateCoupon(coupon5);
 		coupons = admin.getAllCoupons();
 		MyUtils.printCouponsTable(coupons);
-		
-		
-		MyUtils.printTestLine("Testing delete coupon - 5" );
-		facade.deleteCoupon(5);
+
+		MyUtils.printTestLine("Testing delete coupon - 5");
+		((CompanyFacade) companyFacade).deleteCoupon(6);
 		coupons = admin.getAllCoupons();
 		MyUtils.printCouponsTable(coupons);
-		
-		
-		MyUtils.printTestLine("Testing get company coupons - company 1" );
-		coupons = facade.getCompanyCoupons();
+
+		MyUtils.printTestLine("Testing get company coupons - company 1");
+		coupons = ((CompanyFacade) companyFacade).getCompanyCoupons();
 		MyUtils.printCouponsTable(coupons);
-		
-		MyUtils.printTestLine("Testing get company coupons by category ELECTRICTY - company 1" );
-		coupons = facade.getCompanyCouponsByCategory(Category.ELECTRICITY);
+
+		MyUtils.printTestLine("Testing get company coupons by category ELECTRICTY - company 1");
+		coupons = ((CompanyFacade) companyFacade).getCompanyCouponsByCategory(Category.ELECTRICITY);
 		MyUtils.printCouponsTable(coupons);
-		
-		
-		MyUtils.printTestLine("Testing get company coupons Max price 50 - company 1" );
-		coupons = facade.getCompanyCouponsByPrice(50);
+
+		MyUtils.printTestLine("Testing get company coupons Max price 50 - company 1");
+		coupons = ((CompanyFacade) companyFacade).getCompanyCouponsByPrice(50);
 		MyUtils.printCouponsTable(coupons);
-		
-		
-		MyUtils.printTestLine("Testing get company details - company 1" );
-		System.out.println(facade.getCompanyDetails());
-		
-		
+
+		MyUtils.printTestLine("Testing get company details - company 1");
+		System.out.println(((CompanyFacade) companyFacade).getCompanyDetails());
+
 	}
 
 }
