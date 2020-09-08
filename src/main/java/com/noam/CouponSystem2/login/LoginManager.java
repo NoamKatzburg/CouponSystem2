@@ -11,35 +11,33 @@ import com.noam.CouponSystem2.service.ClientFacade;
 import com.noam.CouponSystem2.service.CompanyFacade;
 import com.noam.CouponSystem2.service.CustomerFacade;
 
-import lombok.Data;
-
-@Data
 @Service
 public class LoginManager {
 
 	@Autowired
-	private static AdminFacade aFacade;
+	private AdminFacade adminFacade;
 	@Autowired
-	private static CompanyFacade comFacade;
+	private CompanyFacade companyFacade;
 	@Autowired
-	private static CustomerFacade custFacade;
+	private CustomerFacade customerFacade;
 
-	public static ClientFacade login(String email, String password, ClientType clientType)
+	public ClientFacade login(String email, String password, ClientType clientType)
 			throws SQLException, LoginFailedException {
 		switch (clientType) {
 		case ADMINISTRATOR:
-			if (aFacade.login(email, password)) {
-				return aFacade;
+			if (adminFacade.login(email, password)) {
+				System.out.println("Admin is logged in");
+				return adminFacade;
 			}
 			throw new LoginFailedException("Email or password is incorrect, please try again");
 		case COMPANY:
-			if (comFacade.login(email, password)) {
-				return comFacade;
+			if (companyFacade.login(email, password)) {
+				return companyFacade;
 			}
 			throw new LoginFailedException("Email or password is incorrect, please try again");
 		case CUSTOMER:
-			if (custFacade.login(email, password)) {
-				return custFacade;
+			if (customerFacade.login(email, password)) {
+				return customerFacade;
 			}
 			throw new LoginFailedException("Email or password is incorrect, please try again");
 		default:
@@ -47,4 +45,28 @@ public class LoginManager {
 
 		}
 	}
+
+//	public static ClientFacade login(String email, String password, ClientType clientType)
+//			throws SQLException, LoginFailedException {
+//
+//		if (clientType.equals(ClientType.ADMINISTRATOR)) {
+//			if (adminFacade.login(email, password)) {
+//				return adminFacade;
+//			}
+//		}
+//		if (clientType.equals(ClientType.COMPANY)) {
+//			if (companyFacade.login(email, password)) {
+//				return companyFacade;
+//			}
+//		}
+//		if (clientType.equals(ClientType.CUSTOMER)) {
+//			if (customerFacade.login(email, password)) {
+//				return customerFacade;
+//			}
+//		}
+//
+//		throw new LoginFailedException("Email or password is incorrect, please try again");
+//
+//	}
+
 }

@@ -14,8 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.ForeignKey;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,7 +37,7 @@ public class Customer {
 		coupons.add(coupon);
 	}
 	
-	public void deleteCouponPurchase(int coupons_id) {
-		coupons.remove(coupons_id);
+	public void deleteCouponPurchase(int coupons_index) {
+		coupons.remove(coupons_index);
 	}
 }

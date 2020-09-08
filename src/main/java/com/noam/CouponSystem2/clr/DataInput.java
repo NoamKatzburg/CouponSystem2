@@ -12,8 +12,8 @@ import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
 import com.noam.CouponSystem2.dbdao.CompanyDBDAO;
-import com.noam.CouponSystem2.dbdao.CouponDBDAO;
 import com.noam.CouponSystem2.dbdao.CustomerDBDAO;
+import com.noam.CouponSystem2.utils.MyUtils;
 
 @Component
 @Order(1)
@@ -23,8 +23,6 @@ public class DataInput implements CommandLineRunner {
 	private CompanyDBDAO company;
 	@Autowired
 	private CustomerDBDAO customer;
-	@Autowired
-	private CouponDBDAO coupon;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -126,7 +124,7 @@ public class DataInput implements CommandLineRunner {
 		customer.addCustomer(cust3);
 		customer.addCustomer(cust4);
 
-		
+		MyUtils.printTestLine("DATA INSERTED");
 	}
 
 }

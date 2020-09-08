@@ -12,10 +12,12 @@ import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
 import com.noam.CouponSystem2.beans.CustomerCoupons;
+import com.noam.CouponSystem2.exception.CouponPurchaseException;
 import com.noam.CouponSystem2.login.ClientType;
 import com.noam.CouponSystem2.login.LoginManager;
 import com.noam.CouponSystem2.service.AdminFacade;
 import com.noam.CouponSystem2.service.ClientFacade;
+import com.noam.CouponSystem2.service.CompanyFacade;
 import com.noam.CouponSystem2.service.CustomerFacade;
 import com.noam.CouponSystem2.utils.MyUtils;
 
@@ -23,12 +25,14 @@ import com.noam.CouponSystem2.utils.MyUtils;
 @Order(4)
 public class CustomerTest implements CommandLineRunner {
 
-	// TODO finish checking
-
 	@Autowired
 	private AdminFacade admin;
 	@Autowired
 	private ClientFacade customerFacade;
+	@Autowired
+	private CompanyFacade companyFacade;
+	@Autowired
+	private LoginManager loginManager;
 	private List<Customer> customers;
 	private List<Coupon> coupons;
 
@@ -38,47 +42,74 @@ public class CustomerTest implements CommandLineRunner {
 		MyUtils.classSeparator("Customer");
 
 		MyUtils.printTestLine("testing customer login");
-		customerFacade = LoginManager.login("cust1@g.com", "1234", ClientType.CUSTOMER);
+		customerFacade = loginManager.login("cust1@g.com", "1234", ClientType.CUSTOMER);
+		// System.out.println("Company login = " + customerFacade.login("cust1@g.com",
+		// "1234"));
 
 		MyUtils.printTestLine("testing purchase coupon (coupon id=1)");
 		coupons = admin.getAllCoupons();
 
 		((CustomerFacade) customerFacade).purchaseCoupon(coupons.get(0));
 
-		customerFacade = LoginManager.login("cust2@g.com", "1234", ClientType.CUSTOMER);
+		customerFacade = loginManager.login("cust2@g.com", "1234", ClientType.CUSTOMER);
+		// System.out.println("Company login = " + customerFacade.login("cust2@g.com",
+		// "1234"));
 		((CustomerFacade) customerFacade).purchaseCoupon(coupons.get(1));
-		((CustomerFacade) customerFacade).purchaseCoupon(coupons.get(1)); // TODO tried to buy twice, should fail
+		try {
+			((CustomerFacade) customerFacade).purchaseCoupon(coupons.get(1));
+		} catch (CouponPurchaseException e) {
+			e.getMessage();
+		}
 
-		customerFacade = LoginManager.login("cust3@g.com", "1234", ClientType.CUSTOMER);
+		customerFacade = loginManager.login("cust3@g.com", "1234", ClientType.CUSTOMER);
+		// System.out.println("Company login = " + customerFacade.login("cust3@g.com",
+		// "1234"));
 		((CustomerFacade) customerFacade).purchaseCoupon(coupons.get(2));
 		((CustomerFacade) customerFacade).purchaseCoupon(coupons.get(3));
 		((CustomerFacade) customerFacade).purchaseCoupon(coupons.get(0));
 
-		customerFacade = LoginManager.login("cust4@g.com", "1234", ClientType.CUSTOMER);
+		customerFacade = loginManager.login("cust4@g.com", "1234", ClientType.CUSTOMER);
+		// System.out.println("Company login = " + customerFacade.login("cust4@g.com",
+		// "1234"));
 		((CustomerFacade) customerFacade).purchaseCoupon(coupons.get(3));
 
 		MyUtils.printTestLine("testing get customer coupon customer 3");
 
-		customerFacade = LoginManager.login("cust3@g.com", "1234", ClientType.CUSTOMER);
+		customerFacade = loginManager.login("cust3@g.com", "1234", ClientType.CUSTOMER);
+		// System.out.println("Company login = " + customerFacade.login("cust3@g.com",
+		// "1234"));
 		MyUtils.printCouponsTable(((CustomerFacade) customerFacade).getCustomerCoupons());
 
 		MyUtils.printTestLine("testing get all customers");
 		customers = admin.getAllCustomers();
 		MyUtils.printCustomersTable(customers);
 
-		MyUtils.printTestLine("testing get customer coupon by category FOOD ?");
+		MyUtils.printTestLine("testing get customer 3 coupons by category: FOOD");
 		MyUtils.printCouponsTable(((CustomerFacade) customerFacade).getCustomerCouponsByCategory(Category.FOOD));
 
-		MyUtils.printTestLine("testing get customer coupon by price 30");
+		MyUtils.printTestLine("testing get customer 3 coupons by price: 30");
 		MyUtils.printCouponsTable(((CustomerFacade) customerFacade).getCustomerCouponsByPrice(50));
 
 		MyUtils.printTestLine("testing get customer details");
 		System.out.println(((CustomerFacade) customerFacade).getCustomerDetails());
 
 		MyUtils.printTestLine("deleting customer purchase");
+		System.out.println("customer 3 coupons BEFORE");
 		MyUtils.printCouponsTable(((CustomerFacade) customerFacade).getCustomerCoupons());
 		((CustomerFacade) customerFacade).deleteCouponPurchase(3, 2);
+		System.out.println(" customer 3 coupons AFTER");
 		MyUtils.printCouponsTable(((CustomerFacade) customerFacade).getCustomerCoupons());
+
+		MyUtils.printTestLine(
+				"deleting a coupon (2) with a purchase - should delete from customer 2 and from coupon list");
+		customerFacade = loginManager.login("com2@g.com", "com2345", ClientType.COMPANY);
+		// System.out.println("Company login = " + companyFacade.login("com2@g.com",
+		// "com2345"));
+		companyFacade.deleteCoupon(2);
+		customers = ((AdminFacade) admin).getAllCustomers();
+		MyUtils.printCustomersTable(customers);
+		coupons = admin.getAllCoupons();
+		MyUtils.printCouponsTable(coupons);
 
 	}
 

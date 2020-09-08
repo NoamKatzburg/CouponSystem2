@@ -22,13 +22,13 @@ import com.noam.CouponSystem2.utils.MyUtils;
 @Order(3)
 public class CompanyTest implements CommandLineRunner {
 
-	//TODO finish checking
+	
 	@Autowired
 	private AdminFacade admin;
 	@Autowired
 	private ClientFacade companyFacade;
-//	private List<Company> companies;
-//	private List<Customer> customers;
+	@Autowired
+	private LoginManager loginManager;
 	private List<Coupon> coupons;
 
 	@Override
@@ -36,38 +36,49 @@ public class CompanyTest implements CommandLineRunner {
 		MyUtils.classSeparator("Company");
 
 		MyUtils.printTestLine("Checking login");
-		companyFacade = LoginManager.login("com1@g.com", "com1", ClientType.COMPANY);
+		 companyFacade = loginManager.login("com2@g.com", "com2345", ClientType.COMPANY);
+		//System.out.println("Company login = " + companyFacade.login("com2@g.com", "com2345"));
 
-		MyUtils.printTestLine("Testing add coupon - 5");
-		Coupon coupon5 = new Coupon();
-		coupon5.setCompanyId(2);
-		coupon5.setCategory(Category.VACATION);
-		coupon5.setTitle("Hotel");
-		coupon5.setDescription("vacation hotel");
-		coupon5.setStartDate(java.sql.Date.valueOf("2021-01-03"));
-		coupon5.setEndDate(java.sql.Date.valueOf("2021-09-01"));
-		coupon5.setAmount(300);
-		coupon5.setPrice(10_000);
-		coupon5.setImage("img");
-		((CompanyFacade) companyFacade).addCoupon(coupon5);
+		MyUtils.printTestLine("Testing add coupon - 6");
+		Coupon coupon6 = new Coupon();
+		coupon6.setCompanyId(2);
+		coupon6.setCategory(Category.VACATION);
+		coupon6.setTitle("Hotel");
+		coupon6.setDescription("vacation hotel");
+		coupon6.setStartDate(java.sql.Date.valueOf("2021-01-03"));
+		coupon6.setEndDate(java.sql.Date.valueOf("2021-09-01"));
+		coupon6.setAmount(300);
+		coupon6.setPrice(10_000);
+		coupon6.setImage("img");
+		((CompanyFacade) companyFacade).addCoupon(coupon6);
+		coupons = admin.getAllCoupons();
+		MyUtils.printCouponsTable(coupons);
+		
+		MyUtils.printTestLine("Testing  bad update coupon - 6 set company id from 2 to 3");
+		coupon6.setCompanyId(3);
+		((CompanyFacade) companyFacade).updateCoupon(coupon6);
+		coupons = admin.getAllCoupons();
+		MyUtils.printCouponsTable(coupons);
+		
+
+		MyUtils.printTestLine("Testing update coupon - 6 set to FOOD");
+		coupon6.setCategory(Category.FOOD);
+		((CompanyFacade) companyFacade).updateCoupon(coupon6);
 		coupons = admin.getAllCoupons();
 		MyUtils.printCouponsTable(coupons);
 
-		MyUtils.printTestLine("Testing update coupon - 5 set to FOOD");
-		coupon5.setCategory(Category.FOOD);
-		((CompanyFacade) companyFacade).updateCoupon(coupon5);
-		coupons = admin.getAllCoupons();
-		MyUtils.printCouponsTable(coupons);
-
-		MyUtils.printTestLine("Testing delete coupon - 5");
+		MyUtils.printTestLine("Testing delete coupon - 6");
 		((CompanyFacade) companyFacade).deleteCoupon(6);
 		coupons = admin.getAllCoupons();
 		MyUtils.printCouponsTable(coupons);
 
-		MyUtils.printTestLine("Testing get company coupons - company 1");
+		MyUtils.printTestLine("Testing get company coupons - company 2");
 		coupons = ((CompanyFacade) companyFacade).getCompanyCoupons();
 		MyUtils.printCouponsTable(coupons);
 
+		companyFacade = loginManager.login("com1@g.com", "com1", ClientType.COMPANY);
+	//	System.out.println("Company login = " + companyFacade.login("com1@g.com", "com1"));
+		
 		MyUtils.printTestLine("Testing get company coupons by category ELECTRICTY - company 1");
 		coupons = ((CompanyFacade) companyFacade).getCompanyCouponsByCategory(Category.ELECTRICITY);
 		MyUtils.printCouponsTable(coupons);

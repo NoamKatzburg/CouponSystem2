@@ -29,7 +29,7 @@ public class Company {
 	private String name;
 	private String email;
 	private String password;
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Coupon> coupons;
 	
 	

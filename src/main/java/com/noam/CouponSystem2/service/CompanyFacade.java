@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.noam.CouponSystem2.beans.Category;
 import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
+import com.noam.CouponSystem2.beans.Customer;
 import com.noam.CouponSystem2.exception.InvalidInputException;
 
 import lombok.Data;
@@ -32,24 +33,34 @@ public class CompanyFacade extends ClientFacade {
 		}
 		return false;
 	}
-	
+
 	public void addCoupon(Coupon coupon) throws InvalidInputException {
 		List<Coupon> coupons = couponDBDAO.getAllCoupons();
 		for (Coupon coup : coupons) {
-			if (coup.getCompanyId()==coupon.getCompanyId() && coup.getTitle() == coupon.getTitle()) {
+			if (coup.getCompanyId() == coupon.getCompanyId() && coup.getTitle() == coupon.getTitle()) {
 				throw new InvalidInputException("This company already has a coupon by this title. please rename");
 			}
 		}
 		couponDBDAO.addCoupon(coupon);
 	}
+
 	public void updateCoupon(Coupon coupon) {
 		couponDBDAO.updateCoupon(coupon);
 	}
 
 	public void deleteCoupon(int id) {
+		Coupon c1 = couponDBDAO.getOneCoupon(id);
+		//workes without as well
+//		List<Customer> customers = customerDBDAO.getAllCustomers();
+//		for (Customer customer : customers) {
+//			if (customer.getCoupons().contains(c1)) {
+//				int c1_id = customer.getCoupons().indexOf(c1);
+//				customer.deleteCouponPurchase(c1_id);
+//			}
+//		}
 		couponDBDAO.deleteCoupon(id);
 	}
-	
+
 	public List<Coupon> getCompanyCoupons() {
 		List<Coupon> coupons = couponDBDAO.getAllCoupons();
 		Iterator<Coupon> iter = coupons.iterator();
@@ -63,7 +74,8 @@ public class CompanyFacade extends ClientFacade {
 		}
 		return coupons;
 	}
-	public List<Coupon> getCompanyCouponsByCategory(Category category){
+
+	public List<Coupon> getCompanyCouponsByCategory(Category category) {
 		List<Coupon> coupons = getCompanyCoupons();
 		Iterator<Coupon> iter = coupons.iterator();
 
@@ -76,7 +88,8 @@ public class CompanyFacade extends ClientFacade {
 		}
 		return coupons;
 	}
-	public List<Coupon> getCompanyCouponsByPrice(double maxPrice){
+
+	public List<Coupon> getCompanyCouponsByPrice(double maxPrice) {
 		List<Coupon> coupons = getCompanyCoupons();
 
 		Iterator<Coupon> iter = coupons.iterator();
@@ -90,11 +103,11 @@ public class CompanyFacade extends ClientFacade {
 		}
 		return coupons;
 	}
-	
+
 	public Company getCompanyDetails() {
 		Company c1 = companyDBDAO.getOneCompany(companyId);
 		c1.setCoupons(couponDBDAO.getAllCouponsByCompanyId(companyId));
 		return c1;
 	}
-	
+
 }

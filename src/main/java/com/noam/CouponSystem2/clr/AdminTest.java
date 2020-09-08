@@ -16,16 +16,17 @@ import com.noam.CouponSystem2.login.ClientType;
 import com.noam.CouponSystem2.login.LoginManager;
 import com.noam.CouponSystem2.service.AdminFacade;
 import com.noam.CouponSystem2.service.ClientFacade;
+import com.noam.CouponSystem2.service.CompanyFacade;
 import com.noam.CouponSystem2.utils.MyUtils;
 
 @Component
 @Order(2)
 public class AdminTest implements CommandLineRunner {
 
-	// TODO Finished Checking
-
 	@Autowired
 	private ClientFacade adminFacade;
+	@Autowired
+	private LoginManager loginManager;
 	private List<Company> companies;
 	private List<Customer> customers;
 	private List<Coupon> coupons;
@@ -36,8 +37,10 @@ public class AdminTest implements CommandLineRunner {
 
 		// OK
 		MyUtils.printTestLine("testing login");
-		adminFacade = LoginManager.login("admin@admin.com", "admin", ClientType.ADMINISTRATOR);
-		
+		adminFacade = loginManager.login("admin@admin.com", "admin", ClientType.ADMINISTRATOR);
+		// System.out.println("Admin login = " + adminFacade.login("admin@admin.com",
+		// "admin"));
+
 		// OK
 		MyUtils.printTestLine("testing add company - company 4");
 		Company c4 = new Company();
@@ -61,19 +64,38 @@ public class AdminTest implements CommandLineRunner {
 		companies = ((AdminFacade) adminFacade).getAllCompanies();
 		MyUtils.printCompaniesTable(companies);
 
+		MyUtils.printTestLine("Testing update Company 1 name - will not work");
+		Company c1 = ((AdminFacade) adminFacade).getOneCompany(1);
+		try {
+			c1.setName("com7");
+			((AdminFacade) adminFacade).updateCompany(c1);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+
+		companies = ((AdminFacade) adminFacade).getAllCompanies();
+		MyUtils.printCompaniesTable(companies);
+
 		// OK
-		MyUtils.printTestLine("testing update company - company 2 password and chacking get one company (2)");
+		MyUtils.printTestLine("testing update company - company 2 password and checking get one company (2)");
 		Company c2 = ((AdminFacade) adminFacade).getOneCompany(2);
 		c2.setPassword("com2345");
 		((AdminFacade) adminFacade).updateCompany(c2);
 		companies = ((AdminFacade) adminFacade).getAllCompanies();
 		MyUtils.printCompaniesTable(companies);
 
+		MyUtils.printTestLine("testing delete company - company 4 and its coupon named test");
+		System.out.println("COUPONS BEFORE DELTETING COMPANY");
+		coupons = ((AdminFacade) adminFacade).getAllCoupons();
+		MyUtils.printCouponsTable(coupons);
+
 		// OK
-		MyUtils.printTestLine("testing delete company - company 4");
+		System.out.println("COUPONS AND COMPANIES AFTER DELTETING COMPANY");
 		((AdminFacade) adminFacade).deleteCompany(4);
 		companies = ((AdminFacade) adminFacade).getAllCompanies();
 		MyUtils.printCompaniesTable(companies);
+		coupons = ((AdminFacade) adminFacade).getAllCoupons();
+		MyUtils.printCouponsTable(coupons);
 
 		// OK
 		MyUtils.printTestLine("testing add one customer (5)");

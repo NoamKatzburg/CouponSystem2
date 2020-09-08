@@ -29,7 +29,6 @@ public class CouponDBDAO {
 
 	public void deleteCoupon(int id) {
 		repo.deleteById(id);
-		;
 	}
 
 	public List<Coupon> getAllCoupons() {
@@ -51,23 +50,21 @@ public class CouponDBDAO {
 	}
 
 	public void addCouponPurchase(int customer_id, int coupons_id) {
-		Customer  c1 = customerRepo.getOne(customer_id);
+		Customer c1 = customerRepo.getOne(customer_id);
 		Coupon cu1 = repo.getOne(coupons_id);
 		c1.purchaseCoupon(cu1);
 		customerRepo.saveAndFlush(c1);
 	}
 
 	public void deleteCouponPurchase(int customer_id, int coupons_id) {
-		Customer  c1 = customerRepo.getOne(customer_id);
+		Customer c1 = customerRepo.getOne(customer_id);
 		c1.deleteCouponPurchase(coupons_id);
 		customerRepo.saveAndFlush(c1);
-		
+
 	}
 //
 //	public Coupon doesCouponPurchaseExist(int customer_id, int coupon_id) {
 //		return repo.doesCouponPurchaseExist(customer_id, coupon_id);
 //	}
-	
-
 
 }

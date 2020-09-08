@@ -14,7 +14,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Service
-
 public class AdminFacade extends ClientFacade {
 
 	public AdminFacade() {

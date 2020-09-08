@@ -101,6 +101,6 @@ public class CustomerFacade extends ClientFacade {
 
 	public Customer getCustomerDetails() {
 		return customerDBDAO.getOneCustomer(customerId);
-		// TODO do coupon eagerly load?
+		
 	}
 }

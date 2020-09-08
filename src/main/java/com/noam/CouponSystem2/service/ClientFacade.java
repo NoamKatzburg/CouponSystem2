@@ -9,7 +9,7 @@ import com.noam.CouponSystem2.dbdao.CompanyDBDAO;
 import com.noam.CouponSystem2.dbdao.CouponDBDAO;
 import com.noam.CouponSystem2.dbdao.CustomerDBDAO;
 
-
+@Component
 public abstract class ClientFacade {
 
 	@Autowired
@@ -18,8 +18,7 @@ public abstract class ClientFacade {
 	protected CustomerDBDAO customerDBDAO;
 	@Autowired
 	protected CouponDBDAO couponDBDAO;
-	
 
-	public abstract boolean login(String email, String password)  throws SQLException;
-	
+	public abstract boolean login(String email, String password) throws SQLException;
+
 }
