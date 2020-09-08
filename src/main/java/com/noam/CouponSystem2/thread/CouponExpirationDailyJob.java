@@ -9,31 +9,34 @@ import org.springframework.stereotype.Component;
 
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.dbdao.CouponDBDAO;
+import com.noam.CouponSystem2.service.AdminFacade;
+import com.noam.CouponSystem2.utils.MyUtils;
 
 import lombok.Data;
-
 
 @Component
 public class CouponExpirationDailyJob {
 
 	@Autowired
 	private CouponDBDAO cDao;
-	private Date date;
+	@Autowired
+	private AdminFacade admin;
 	private List<Coupon> coupons;
 
-	@Scheduled(fixedRate = 24 * 60 * 60 * 1000)
+	@Scheduled(fixedRate = 60 * 1000)
 	public void run() {
-		System.out.println("thread is running");
-		date = new Date();
-		coupons = cDao.getAllCoupons();
-		for (Coupon coupon : coupons) {
+		System.out.println("Running Daily Job");
+		for (Coupon coupon : cDao.getAllCoupons()) {
 			// checking coupon expire date
-			if (date.after(coupon.getEndDate())) {
+			if ((new Date()).after(coupon.getEndDate())) {
 				// delete coupon
 				cDao.deleteCoupon(coupon.getId());
 			}
 
 		}
+		MyUtils.printTestLine("checking coupons after daily test");
+		coupons = admin.getAllCoupons();
+		MyUtils.printCouponsTable(coupons);
 	}
 
 }
