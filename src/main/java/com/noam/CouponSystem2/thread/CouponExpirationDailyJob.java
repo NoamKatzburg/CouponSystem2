@@ -26,6 +26,8 @@ public class CouponExpirationDailyJob {
 	@Scheduled(fixedRate = 60 * 1000)
 	public void run() {
 		System.out.println("Running Daily Job");
+		coupons = admin.getAllCoupons();
+		MyUtils.printCouponsTable(coupons);
 		for (Coupon coupon : cDao.getAllCoupons()) {
 			// checking coupon expire date
 			if ((new Date()).after(coupon.getEndDate())) {

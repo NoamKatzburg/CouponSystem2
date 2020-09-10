@@ -13,6 +13,7 @@ import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
 import com.noam.CouponSystem2.beans.CustomerCoupons;
 import com.noam.CouponSystem2.exception.CouponPurchaseException;
+import com.noam.CouponSystem2.exception.LoginFailedException;
 import com.noam.CouponSystem2.login.ClientType;
 import com.noam.CouponSystem2.login.LoginManager;
 import com.noam.CouponSystem2.service.AdminFacade;
@@ -35,13 +36,20 @@ public class CustomerTest implements CommandLineRunner {
 	private LoginManager loginManager;
 	private List<Customer> customers;
 	private List<Coupon> coupons;
+	private List<Company> companies;
 
 	@Override
 	public void run(String... args) throws Exception {
 
 		MyUtils.classSeparator("Customer");
 
-		MyUtils.printTestLine("testing customer login");
+		MyUtils.printTestLine("testing customer login - BAD LOGIN");
+		try {
+			customerFacade = loginManager.login("cust7@g.com", "1234", ClientType.CUSTOMER);
+		} catch (LoginFailedException e) {
+			System.out.println(e.getMessage());
+		}
+		MyUtils.printTestLine("testing customer login - GOOD LOGIN");
 		customerFacade = loginManager.login("cust1@g.com", "1234", ClientType.CUSTOMER);
 		// System.out.println("Company login = " + customerFacade.login("cust1@g.com",
 		// "1234"));
@@ -58,7 +66,7 @@ public class CustomerTest implements CommandLineRunner {
 		try {
 			((CustomerFacade) customerFacade).purchaseCoupon(coupons.get(1));
 		} catch (CouponPurchaseException e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 
 		customerFacade = loginManager.login("cust3@g.com", "1234", ClientType.CUSTOMER);
@@ -110,6 +118,17 @@ public class CustomerTest implements CommandLineRunner {
 		MyUtils.printCustomersTable(customers);
 		coupons = admin.getAllCoupons();
 		MyUtils.printCouponsTable(coupons);
+		
+		MyUtils.printTestLine(
+				"Deleting a company with purchased coupons");
+		admin.deleteCompany(3);
+		companies = ((AdminFacade) admin).getAllCompanies();
+		MyUtils.printCompaniesTable(companies);
+		customers = ((AdminFacade) admin).getAllCustomers();
+		MyUtils.printCustomersTable(customers);
+		coupons = admin.getAllCoupons();
+		MyUtils.printCouponsTable(coupons);
+		
 
 	}
 

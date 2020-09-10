@@ -36,10 +36,7 @@ public class DailyTest implements CommandLineRunner {
 		coupon1.setPrice(100);
 		coupon1.setImage("img");
 		coupon.addCoupon(coupon1);
-		
-		MyUtils.printTestLine("new expired coupon added to check with daily test");
-		coupons = admin.getAllCoupons();
-		MyUtils.printCouponsTable(coupons);
+				
 		
 		
 

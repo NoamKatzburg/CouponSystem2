@@ -70,7 +70,7 @@ public class AdminTest implements CommandLineRunner {
 			c1.setName("com7");
 			((AdminFacade) adminFacade).updateCompany(c1);
 		} catch (Exception e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 		}
 
 		companies = ((AdminFacade) adminFacade).getAllCompanies();
