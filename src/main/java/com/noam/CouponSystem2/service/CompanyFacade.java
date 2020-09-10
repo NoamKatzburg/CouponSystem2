@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.noam.CouponSystem2.beans.Category;
 import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
-import com.noam.CouponSystem2.beans.Customer;
 import com.noam.CouponSystem2.exception.InvalidInputException;
 
 import lombok.Data;
@@ -49,8 +48,8 @@ public class CompanyFacade extends ClientFacade {
 	}
 
 	public void deleteCoupon(int id) {
-		Coupon c1 = couponDBDAO.getOneCoupon(id);
-		//workes without as well
+		//Works without as well
+// 		Coupon c1 = couponDBDAO.getOneCoupon(id);	
 //		List<Customer> customers = customerDBDAO.getAllCustomers();
 //		for (Customer customer : customers) {
 //			if (customer.getCoupons().contains(c1)) {

@@ -10,8 +10,6 @@ import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
 import com.noam.CouponSystem2.exception.InvalidInputException;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Service
 public class AdminFacade extends ClientFacade {
