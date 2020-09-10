@@ -8,7 +8,6 @@ import java.util.List;
 import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
-import com.noam.CouponSystem2.beans.CustomerCoupons;
 
 public class MyUtils {
 
@@ -87,15 +86,4 @@ public class MyUtils {
 
 	}
 
-	public static void printCustomerCouponsTable(List<CustomerCoupons> coupons) {
-		System.out.printf("%10s %10s", "customerId", "couponId");
-		System.out.println();
-		System.out.print("===============================================================");
-		separatorLine();
-		for (int i = 0; i < coupons.size(); i++) {
-			System.out.printf("%10s %10s", (coupons.get(i)).getCustomerId(), (coupons.get(i)).getCouponId());
-			System.out.println();
-		}
-		System.out.println();
-	}
 }

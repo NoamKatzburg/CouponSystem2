@@ -11,7 +11,6 @@ import com.noam.CouponSystem2.beans.Category;
 import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
-import com.noam.CouponSystem2.beans.CustomerCoupons;
 import com.noam.CouponSystem2.exception.CouponPurchaseException;
 import com.noam.CouponSystem2.exception.LoginFailedException;
 import com.noam.CouponSystem2.login.ClientType;

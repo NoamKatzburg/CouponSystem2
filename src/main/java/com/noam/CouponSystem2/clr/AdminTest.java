@@ -16,7 +16,6 @@ import com.noam.CouponSystem2.login.ClientType;
 import com.noam.CouponSystem2.login.LoginManager;
 import com.noam.CouponSystem2.service.AdminFacade;
 import com.noam.CouponSystem2.service.ClientFacade;
-import com.noam.CouponSystem2.service.CompanyFacade;
 import com.noam.CouponSystem2.utils.MyUtils;
 
 @Component

@@ -8,9 +8,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.noam.CouponSystem2.beans.Category;
-import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
-import com.noam.CouponSystem2.beans.Customer;
 import com.noam.CouponSystem2.login.ClientType;
 import com.noam.CouponSystem2.login.LoginManager;
 import com.noam.CouponSystem2.service.AdminFacade;
@@ -22,7 +20,6 @@ import com.noam.CouponSystem2.utils.MyUtils;
 @Order(3)
 public class CompanyTest implements CommandLineRunner {
 
-	
 	@Autowired
 	private AdminFacade admin;
 	@Autowired
@@ -36,8 +33,9 @@ public class CompanyTest implements CommandLineRunner {
 		MyUtils.classSeparator("Company");
 
 		MyUtils.printTestLine("Checking login");
-		 companyFacade = loginManager.login("com2@g.com", "com2345", ClientType.COMPANY);
-		//System.out.println("Company login = " + companyFacade.login("com2@g.com", "com2345"));
+		companyFacade = loginManager.login("com2@g.com", "com2345", ClientType.COMPANY);
+		// System.out.println("Company login = " + companyFacade.login("com2@g.com",
+		// "com2345"));
 
 		MyUtils.printTestLine("Testing add coupon - 6");
 		Coupon coupon6 = new Coupon();
@@ -53,13 +51,12 @@ public class CompanyTest implements CommandLineRunner {
 		((CompanyFacade) companyFacade).addCoupon(coupon6);
 		coupons = admin.getAllCoupons();
 		MyUtils.printCouponsTable(coupons);
-		
+
 		MyUtils.printTestLine("Testing  bad update coupon - 6 set company id from 2 to 3");
 		coupon6.setCompanyId(3);
 		((CompanyFacade) companyFacade).updateCoupon(coupon6);
 		coupons = admin.getAllCoupons();
 		MyUtils.printCouponsTable(coupons);
-		
 
 		MyUtils.printTestLine("Testing update coupon - 6 set to FOOD");
 		coupon6.setCategory(Category.FOOD);
@@ -77,8 +74,9 @@ public class CompanyTest implements CommandLineRunner {
 		MyUtils.printCouponsTable(coupons);
 
 		companyFacade = loginManager.login("com1@g.com", "com1", ClientType.COMPANY);
-	//	System.out.println("Company login = " + companyFacade.login("com1@g.com", "com1"));
-		
+		// System.out.println("Company login = " + companyFacade.login("com1@g.com",
+		// "com1"));
+
 		MyUtils.printTestLine("Testing get company coupons by category ELECTRICTY - company 1");
 		coupons = ((CompanyFacade) companyFacade).getCompanyCouponsByCategory(Category.ELECTRICITY);
 		MyUtils.printCouponsTable(coupons);

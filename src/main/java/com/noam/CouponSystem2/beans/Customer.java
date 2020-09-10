@@ -9,10 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.UniqueConstraint;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,8 +21,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer {
-	
-	@Id @GeneratedValue (strategy = GenerationType.IDENTITY) @Column(updatable = false)
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(updatable = false)
 	private int id;
 	private String firstName;
 	private String lastName;
@@ -32,11 +32,11 @@ public class Customer {
 	private String password;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Coupon> coupons;
-	
+
 	public void purchaseCoupon(Coupon coupon) {
 		coupons.add(coupon);
 	}
-	
+
 	public void deleteCouponPurchase(int coupons_index) {
 		coupons.remove(coupons_index);
 	}

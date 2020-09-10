@@ -1,7 +1,5 @@
 package com.noam.CouponSystem2.clr;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -10,8 +8,6 @@ import org.springframework.stereotype.Component;
 import com.noam.CouponSystem2.beans.Category;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.dbdao.CouponDBDAO;
-import com.noam.CouponSystem2.service.AdminFacade;
-import com.noam.CouponSystem2.utils.MyUtils;
 @Component
 @Order(5)
 public class DailyTest implements CommandLineRunner {
@@ -19,8 +15,6 @@ public class DailyTest implements CommandLineRunner {
 	@Autowired
 	private CouponDBDAO coupon;
 	@Autowired
-	private AdminFacade admin;
-	private List<Coupon> coupons;
 	
 	@Override
 	public void run(String... args) throws Exception {

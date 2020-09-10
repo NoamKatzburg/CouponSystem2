@@ -5,17 +5,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-
 import com.noam.CouponSystem2.beans.Category;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
-import com.noam.CouponSystem2.beans.CustomerCoupons;
-import com.noam.CouponSystem2.dbdao.CustomerDBDAO;
 import com.noam.CouponSystem2.exception.CouponPurchaseException;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

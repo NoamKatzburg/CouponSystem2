@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
-import com.noam.CouponSystem2.beans.CustomerCoupons;
 import com.noam.CouponSystem2.repo.CouponRepository;
 import com.noam.CouponSystem2.repo.CustomerRepository;
 

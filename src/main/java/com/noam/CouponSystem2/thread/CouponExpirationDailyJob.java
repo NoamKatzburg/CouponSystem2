@@ -12,7 +12,6 @@ import com.noam.CouponSystem2.dbdao.CouponDBDAO;
 import com.noam.CouponSystem2.service.AdminFacade;
 import com.noam.CouponSystem2.utils.MyUtils;
 
-import lombok.Data;
 
 @Component
 public class CouponExpirationDailyJob {
