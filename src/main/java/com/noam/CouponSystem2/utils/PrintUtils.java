@@ -9,7 +9,7 @@ import com.noam.CouponSystem2.beans.Company;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
 
-public class MyUtils {
+public class PrintUtils {
 
 	public static void classSeparator(String className) {
 		System.out.println();

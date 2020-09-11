@@ -13,7 +13,7 @@ import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.beans.Customer;
 import com.noam.CouponSystem2.dbdao.CompanyDBDAO;
 import com.noam.CouponSystem2.dbdao.CustomerDBDAO;
-import com.noam.CouponSystem2.utils.MyUtils;
+import com.noam.CouponSystem2.utils.PrintUtils;
 
 @Component
 @Order(1)
@@ -124,7 +124,7 @@ public class DataInput implements CommandLineRunner {
 		customer.addCustomer(cust3);
 		customer.addCustomer(cust4);
 
-		MyUtils.printTestLine("DATA INSERTED");
+		PrintUtils.printTestLine("DATA INSERTED");
 	}
 
 }

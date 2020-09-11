@@ -14,10 +14,6 @@ import com.noam.CouponSystem2.exception.InvalidInputException;
 @Service
 public class AdminFacade extends ClientFacade {
 
-	public AdminFacade() {
-		super();
-	}
-
 	@Override
 	public boolean login(String email, String password) throws SQLException {
 		return email.equals("admin@admin.com") && password.equals("admin");

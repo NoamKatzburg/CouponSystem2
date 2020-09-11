@@ -31,7 +31,7 @@ public class Customer {
 	private String email;
 	private String password;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Coupon> coupons;
+	private List<Coupon> coupons;//TODO init
 
 	public void purchaseCoupon(Coupon coupon) {
 		coupons.add(coupon);

@@ -14,7 +14,6 @@ public class DailyTest implements CommandLineRunner {
 
 	@Autowired
 	private CouponDBDAO coupon;
-	@Autowired
 	
 	@Override
 	public void run(String... args) throws Exception {

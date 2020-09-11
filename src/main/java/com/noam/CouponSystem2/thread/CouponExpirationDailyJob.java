@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.noam.CouponSystem2.beans.Coupon;
 import com.noam.CouponSystem2.dbdao.CouponDBDAO;
 import com.noam.CouponSystem2.service.AdminFacade;
-import com.noam.CouponSystem2.utils.MyUtils;
+import com.noam.CouponSystem2.utils.PrintUtils;
 
 
 @Component
@@ -26,7 +26,7 @@ public class CouponExpirationDailyJob {
 	public void run() {
 		System.out.println("Running Daily Job");
 		coupons = admin.getAllCoupons();
-		MyUtils.printCouponsTable(coupons);
+		PrintUtils.printCouponsTable(coupons);
 		for (Coupon coupon : cDao.getAllCoupons()) {
 			// checking coupon expire date
 			if ((new Date()).after(coupon.getEndDate())) {
@@ -35,9 +35,9 @@ public class CouponExpirationDailyJob {
 			}
 
 		}
-		MyUtils.printTestLine("checking coupons after daily test");
+		PrintUtils.printTestLine("checking coupons after daily test");
 		coupons = admin.getAllCoupons();
-		MyUtils.printCouponsTable(coupons);
+		PrintUtils.printCouponsTable(coupons);
 	}
 
 }
